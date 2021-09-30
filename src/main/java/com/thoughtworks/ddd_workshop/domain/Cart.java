@@ -28,7 +28,7 @@ public class Cart {
     }
 
     public void addProduct(Item item) {
-        raise(new AddItemEvent(item.getName(), item.getQuantity()));
+        raise(new AddItemEvent(item.getProduct().getName(), item.getProduct().getPrice(), item.getQuantity()));
     }
 
     public void removeProducts(String productName) {
@@ -41,12 +41,12 @@ public class Cart {
 
     public boolean contains(String productName) {
         return this.items.stream()
-                .anyMatch(item -> Objects.equals(item.getName(), productName));
+                .anyMatch(item -> Objects.equals(item.getProduct().getName(), productName));
     }
 
     public long countProduct(String productName) {
         Optional<Item> found = this.items.stream()
-                .filter(item -> Objects.equals(item.getName(), productName))
+                .filter(item -> Objects.equals(item.getProduct().getName(), productName))
                 .findFirst();
 
         if (found.isPresent()) {
@@ -58,7 +58,7 @@ public class Cart {
 
     private void raise(AddItemEvent event) {
         this.events.add(event);
-        this.items.add(new Item(event.name, event.quantity));
+        this.items.add(new Item(new Product(event.name, event.price), event.quantity));
     }
 
     private void raise(RemoveItemEvent event) {
@@ -66,11 +66,11 @@ public class Cart {
 
         String productName = event.name;
         var filteredProducts = this.items.stream()
-                .filter(p -> !Objects.equals(p.getName(), productName))
+                .filter(p -> !Objects.equals(p.getProduct().getName(), productName))
                 .collect(Collectors.toList());
 
         if (filteredProducts.size() < this.items.size()) {
-            this.removedItems.add(new Item(productName, 0));
+            this.removedItems.add(new Item(new Product(productName, null), 0));
             this.items = filteredProducts;
         }
     }
@@ -79,10 +79,12 @@ public class Cart {
 
     private class AddItemEvent extends Event {
         private final String name;
+        private final Price price;
         private final int quantity;
 
-        public AddItemEvent(String name, int quantity) {
+        public AddItemEvent(String name, Price price, int quantity) {
             this.name = name;
+            this.price = price;
             this.quantity = quantity;
         }
     }
