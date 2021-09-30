@@ -9,9 +9,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CartTest {
 
-    private static Product HERO_INK_PEN = new Product("Hero ink Pen", new Price(0.99, Currency.getInstance("USD")));
-    private static Product IPAD_PRO = new Product("Ipad Pro", new Price(999.99, Currency.getInstance("USD")));
-    private static Product REEBOK_CRICKET_BAT = new Product("Reebok cricket bat", new Price(150.2, Currency.getInstance("USD")));
+    private static CompetitorBasedPricer pricer = new CompetitorBasedPricer();
+
+    private static String HERO_INK_PEN_NAME = "Hero ink Pen";
+    private static String IPAD_PRO_NAME = "Ipad Pro";
+    private static String REEBOK_CRICKET_BAT_NAME = "Reebok cricket bat";
+
+    private static Product HERO_INK_PEN = new Product(
+            HERO_INK_PEN_NAME,
+            new Price(pricer.getAdjustedPrice(HERO_INK_PEN_NAME), Currency.getInstance("USD")));
+    private static Product IPAD_PRO = new Product(
+            IPAD_PRO_NAME,
+            new Price(pricer.getAdjustedPrice(IPAD_PRO_NAME), Currency.getInstance("USD")));
+    private static Product REEBOK_CRICKET_BAT = new Product(
+            REEBOK_CRICKET_BAT_NAME,
+            new Price(pricer.getAdjustedPrice(REEBOK_CRICKET_BAT_NAME), Currency.getInstance("USD")));
 
     @Test
     void addIpadProToTheCart() {
