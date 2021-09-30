@@ -32,15 +32,6 @@ public class Cart {
     }
 
     public void removeProducts(String productName) {
-        var filteredProducts = this.items.stream()
-                .filter(p -> !Objects.equals(p.getName(), productName))
-                .collect(Collectors.toList());
-
-        if (filteredProducts.size() < this.items.size()) {
-            this.removedItems.add(new Item(productName, 0));
-            this.items = filteredProducts;
-        }
-
         raise(new RemoveItem(productName));
     }
 
@@ -66,12 +57,22 @@ public class Cart {
     }
 
     private void raise(AddItemEvent event) {
-        this.items.add(new Item(event.name, event.quantity));
         this.events.add(event);
+        this.items.add(new Item(event.name, event.quantity));
     }
 
     private void raise(RemoveItem event) {
         this.events.add(event);
+
+        String productName = event.name;
+        var filteredProducts = this.items.stream()
+                .filter(p -> !Objects.equals(p.getName(), productName))
+                .collect(Collectors.toList());
+
+        if (filteredProducts.size() < this.items.size()) {
+            this.removedItems.add(new Item(productName, 0));
+            this.items = filteredProducts;
+        }
     }
 
     private class Event {}
