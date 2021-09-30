@@ -2,22 +2,21 @@ package com.thoughtworks.ddd_workshop.domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Currency;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CartTest {
 
-    private static CompetitorBasedPricer pricer = new CompetitorBasedPricer();
+    private static PriceCalculator pricer = new PriceCalculator();
 
     private static String HERO_INK_PEN_NAME = "Hero ink Pen";
     private static String IPAD_PRO_NAME = "Ipad Pro";
     private static String REEBOK_CRICKET_BAT_NAME = "Reebok cricket bat";
 
-    private static Product HERO_INK_PEN = new Product(HERO_INK_PEN_NAME, pricer.getAdjustedPrice(HERO_INK_PEN_NAME));
-    private static Product IPAD_PRO = new Product(IPAD_PRO_NAME,pricer.getAdjustedPrice(IPAD_PRO_NAME));
-    private static Product REEBOK_CRICKET_BAT = new Product(REEBOK_CRICKET_BAT_NAME, pricer.getAdjustedPrice(REEBOK_CRICKET_BAT_NAME));
+    private static Product HERO_INK_PEN = new Product(HERO_INK_PEN_NAME, pricer.calculate(HERO_INK_PEN_NAME));
+    private static Product IPAD_PRO = new Product(IPAD_PRO_NAME,pricer.calculate(IPAD_PRO_NAME));
+    private static Product REEBOK_CRICKET_BAT = new Product(REEBOK_CRICKET_BAT_NAME, pricer.calculate(REEBOK_CRICKET_BAT_NAME));
 
     @Test
     void addIpadProToTheCart() {
