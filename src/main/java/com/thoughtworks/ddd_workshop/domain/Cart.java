@@ -32,23 +32,6 @@ public class Cart {
         this.events.add(new AddItemEvent(item.getName(), item.getQuantity()));
     }
 
-    public boolean contains(String productName) {
-        return this.items.stream()
-                .anyMatch(item -> Objects.equals(item.getName(), productName));
-    }
-
-    public long countProduct(String productName) {
-        Optional<Item> found = this.items.stream()
-                .filter(item -> Objects.equals(item.getName(), productName))
-                .findFirst();
-
-        if (found.isPresent()) {
-            return found.get().getQuantity();
-        }
-
-        return 0;
-    }
-
     public void removeProducts(String productName) {
         var filteredProducts = this.items.stream()
                 .filter(p -> !Objects.equals(p.getName(), productName))
@@ -64,6 +47,23 @@ public class Cart {
 
     public List<Item> getRemovedProducts() {
         return this.removedItems;
+    }
+
+    public boolean contains(String productName) {
+        return this.items.stream()
+                .anyMatch(item -> Objects.equals(item.getName(), productName));
+    }
+
+    public long countProduct(String productName) {
+        Optional<Item> found = this.items.stream()
+                .filter(item -> Objects.equals(item.getName(), productName))
+                .findFirst();
+
+        if (found.isPresent()) {
+            return found.get().getQuantity();
+        }
+
+        return 0;
     }
 
     private class Event {}
