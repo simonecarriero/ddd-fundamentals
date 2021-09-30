@@ -15,15 +15,9 @@ public class CartTest {
     private static String IPAD_PRO_NAME = "Ipad Pro";
     private static String REEBOK_CRICKET_BAT_NAME = "Reebok cricket bat";
 
-    private static Product HERO_INK_PEN = new Product(
-            HERO_INK_PEN_NAME,
-            new Price(pricer.getAdjustedPrice(HERO_INK_PEN_NAME), Currency.getInstance("USD")));
-    private static Product IPAD_PRO = new Product(
-            IPAD_PRO_NAME,
-            new Price(pricer.getAdjustedPrice(IPAD_PRO_NAME), Currency.getInstance("USD")));
-    private static Product REEBOK_CRICKET_BAT = new Product(
-            REEBOK_CRICKET_BAT_NAME,
-            new Price(pricer.getAdjustedPrice(REEBOK_CRICKET_BAT_NAME), Currency.getInstance("USD")));
+    private static Product HERO_INK_PEN = new Product(HERO_INK_PEN_NAME, pricer.getAdjustedPrice(HERO_INK_PEN_NAME));
+    private static Product IPAD_PRO = new Product(IPAD_PRO_NAME,pricer.getAdjustedPrice(IPAD_PRO_NAME));
+    private static Product REEBOK_CRICKET_BAT = new Product(REEBOK_CRICKET_BAT_NAME, pricer.getAdjustedPrice(REEBOK_CRICKET_BAT_NAME));
 
     @Test
     void addIpadProToTheCart() {

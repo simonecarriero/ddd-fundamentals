@@ -1,5 +1,6 @@
 package com.thoughtworks.ddd_workshop.domain;
 
+import java.util.Currency;
 import java.util.Map;
 
 public class CompetitorBasedPricer {
@@ -9,7 +10,7 @@ public class CompetitorBasedPricer {
             "Reebok cricket bat", 56.39);
     private final Double ratio = 0.9;
 
-    public double getAdjustedPrice(String productName) {
-        return prices.get(productName) * ratio;
+    public Price getAdjustedPrice(String productName) {
+        return new Price(prices.get(productName) * ratio, Currency.getInstance("USD"));
     }
 }
