@@ -16,7 +16,7 @@ public class Item {
         return name;
     }
 
-    public long getQuantity() {
+    public int getQuantity() {
         return this.quantity;
     }
 

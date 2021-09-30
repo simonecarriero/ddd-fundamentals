@@ -28,8 +28,7 @@ public class Cart {
     }
 
     public void addProduct(Item item) {
-        this.items.add(item);
-        this.events.add(new AddItemEvent(item.getName(), item.getQuantity()));
+        raise(new AddItemEvent(item.getName(), item.getQuantity()));
     }
 
     public void removeProducts(String productName) {
@@ -42,7 +41,7 @@ public class Cart {
             this.items = filteredProducts;
         }
 
-        this.events.add(new RemoveItem(productName));
+        raise(new RemoveItem(productName));
     }
 
     public List<Item> getRemovedProducts() {
@@ -66,13 +65,22 @@ public class Cart {
         return 0;
     }
 
+    private void raise(AddItemEvent event) {
+        this.items.add(new Item(event.name, event.quantity));
+        this.events.add(event);
+    }
+
+    private void raise(RemoveItem event) {
+        this.events.add(event);
+    }
+
     private class Event {}
 
     private class AddItemEvent extends Event {
         private final String name;
-        private final long quantity;
+        private final int quantity;
 
-        public AddItemEvent(String name, long quantity) {
+        public AddItemEvent(String name, int quantity) {
             this.name = name;
             this.quantity = quantity;
         }
