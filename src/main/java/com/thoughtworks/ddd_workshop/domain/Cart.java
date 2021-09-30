@@ -32,7 +32,7 @@ public class Cart {
     }
 
     public void removeProducts(String productName) {
-        raise(new RemoveItem(productName));
+        raise(new RemoveItemEvent(productName));
     }
 
     public List<Item> getRemovedProducts() {
@@ -61,7 +61,7 @@ public class Cart {
         this.items.add(new Item(event.name, event.quantity));
     }
 
-    private void raise(RemoveItem event) {
+    private void raise(RemoveItemEvent event) {
         this.events.add(event);
 
         String productName = event.name;
@@ -87,10 +87,10 @@ public class Cart {
         }
     }
 
-    private class RemoveItem extends Event {
+    private class RemoveItemEvent extends Event {
         private final String name;
 
-        public RemoveItem(String name) {
+        public RemoveItemEvent(String name) {
             this.name = name;
         }
     }
