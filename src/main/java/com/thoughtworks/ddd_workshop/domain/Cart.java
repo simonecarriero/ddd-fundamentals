@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 public class Cart {
 
     private final UUID id = UUID.randomUUID();
-    private List<Product> products = new ArrayList<>();
-    private final List<Product> removedProducts = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
+    private final List<Item> removedItems = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -23,43 +23,43 @@ public class Cart {
     }
 
     public boolean isEmpty() {
-        return this.products.isEmpty();
+        return this.items.isEmpty();
     }
 
-    public void addProduct(Product product) {
-        this.products.add(product);
+    public void addProduct(Item item) {
+        this.items.add(item);
     }
 
-    public void addProduct(Product product, int quantity) {
+    public void addProduct(Item item, int quantity) {
         for (int i = 0; i < quantity; i++) {
-            this.addProduct(product);
+            this.addProduct(item);
         }
     }
 
     public boolean contains(String productName) {
-        return this.products.stream()
-                .anyMatch(product -> Objects.equals(product.getName(), productName));
+        return this.items.stream()
+                .anyMatch(item -> Objects.equals(item.getName(), productName));
     }
 
     public long countProduct(String productName) {
-        return this.products.stream()
-                .filter(product -> Objects.equals(product.getName(), productName))
+        return this.items.stream()
+                .filter(item -> Objects.equals(item.getName(), productName))
                 .count();
     }
 
     public void removeProducts(String productName) {
-        var filteredProducts = this.products.stream()
+        var filteredProducts = this.items.stream()
                 .filter(p -> !Objects.equals(p.getName(), productName))
                 .collect(Collectors.toList());
 
-        if (filteredProducts.size() < this.products.size()) {
-            this.removedProducts.add(new Product(productName));
-            this.products = filteredProducts;
+        if (filteredProducts.size() < this.items.size()) {
+            this.removedItems.add(new Item(productName));
+            this.items = filteredProducts;
         }
 
     }
 
-    public List<Product> getRemovedProducts() {
-        return this.removedProducts;
+    public List<Item> getRemovedProducts() {
+        return this.removedItems;
     }
 }

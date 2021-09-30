@@ -2,11 +2,11 @@ package com.thoughtworks.ddd_workshop.domain;
 
 import java.util.Objects;
 
-public class Product {
+public class Item {
 
     private String name;
 
-    public Product(String name) {
+    public Item(String name) {
         this.name = name;
     }
 
@@ -18,8 +18,8 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(name, product.name);
+        Item item = (Item) o;
+        return Objects.equals(name, item.name);
     }
 
     @Override

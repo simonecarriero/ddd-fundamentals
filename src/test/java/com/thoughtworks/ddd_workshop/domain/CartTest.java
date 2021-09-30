@@ -16,7 +16,7 @@ public class CartTest {
     void addIpadProToTheCart() {
         var cart = new Cart();
 
-        cart.addProduct(new Product(IPAD_PRO));
+        cart.addProduct(new Item(IPAD_PRO));
 
         assertFalse(cart.isEmpty());
         assertTrue(cart.contains(IPAD_PRO));
@@ -26,7 +26,7 @@ public class CartTest {
     void addHeroInkPenToTheCart() {
         var cart = new Cart();
 
-        cart.addProduct(new Product(HERO_INK_PEN_NAME));
+        cart.addProduct(new Item(HERO_INK_PEN_NAME));
 
         assertFalse(cart.isEmpty());
         assertTrue(cart.contains(HERO_INK_PEN_NAME));
@@ -37,7 +37,7 @@ public class CartTest {
     void addTwoReebokCricketBatsToTheCart() {
         var cart = new Cart();
 
-        cart.addProduct(new Product(REEBOK_CRICKET_BAT), 2);
+        cart.addProduct(new Item(REEBOK_CRICKET_BAT), 2);
 
         assertEquals(2, cart.countProduct(REEBOK_CRICKET_BAT));
     }
@@ -46,8 +46,8 @@ public class CartTest {
     void addOnePlusOneReebokCricketBatsToTheCart() {
         var cart = new Cart();
 
-        cart.addProduct(new Product(REEBOK_CRICKET_BAT));
-        cart.addProduct(new Product(REEBOK_CRICKET_BAT));
+        cart.addProduct(new Item(REEBOK_CRICKET_BAT));
+        cart.addProduct(new Item(REEBOK_CRICKET_BAT));
 
         assertEquals(2, cart.countProduct(REEBOK_CRICKET_BAT));
     }
@@ -56,7 +56,7 @@ public class CartTest {
     void removeAllReebokCricketBatsFromTheCart() {
         var cart = new Cart();
 
-        cart.addProduct(new Product(REEBOK_CRICKET_BAT), 3);
+        cart.addProduct(new Item(REEBOK_CRICKET_BAT), 3);
         cart.removeProducts(REEBOK_CRICKET_BAT);
 
         assertEquals(0, cart.countProduct(REEBOK_CRICKET_BAT));
@@ -66,8 +66,8 @@ public class CartTest {
     void notRemoveOtherProductsWhenRemovingAllReebokCricketBatsFromTheCart() {
         var cart = new Cart();
 
-        cart.addProduct(new Product(IPAD_PRO));
-        cart.addProduct(new Product(REEBOK_CRICKET_BAT));
+        cart.addProduct(new Item(IPAD_PRO));
+        cart.addProduct(new Item(REEBOK_CRICKET_BAT));
         cart.removeProducts(REEBOK_CRICKET_BAT);
 
         assertEquals(1, cart.countProduct(IPAD_PRO));
@@ -77,10 +77,10 @@ public class CartTest {
     void keepTrackOfTheProductsThatHaveBeenRemovedFromTheCart() {
         var cart = new Cart();
 
-        cart.addProduct(new Product(IPAD_PRO));
+        cart.addProduct(new Item(IPAD_PRO));
         cart.removeProducts(IPAD_PRO);
 
-        assertEquals(List.of(new Product(IPAD_PRO)), cart.getRemovedProducts());
+        assertEquals(List.of(new Item(IPAD_PRO)), cart.getRemovedProducts());
     }
 
     @Test
@@ -95,10 +95,10 @@ public class CartTest {
     @Test
     void twoCartsShouldNotBeTheSame() {
         Cart cart1 = new Cart();
-        cart1.addProduct(new Product(IPAD_PRO));
+        cart1.addProduct(new Item(IPAD_PRO));
 
         Cart cart2 = new Cart();
-        cart2.addProduct(new Product(IPAD_PRO));
+        cart2.addProduct(new Item(IPAD_PRO));
 
         assertNotEquals(cart1, cart2);
     }
