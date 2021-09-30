@@ -8,6 +8,7 @@ public class Cart {
     private final UUID id = UUID.randomUUID();
     private List<Item> items = new ArrayList<>();
     private final List<Item> removedItems = new ArrayList<>();
+    private final List<Event> events = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -28,6 +29,7 @@ public class Cart {
 
     public void addProduct(Item item) {
         this.items.add(item);
+        this.events.add(new AddItemEvent(item.getName(), item.getQuantity()));
     }
 
     public boolean contains(String productName) {
@@ -56,9 +58,31 @@ public class Cart {
             this.removedItems.add(new Item(productName, 0));
             this.items = filteredProducts;
         }
+
+        this.events.add(new RemoveItem(productName));
     }
 
     public List<Item> getRemovedProducts() {
         return this.removedItems;
+    }
+
+    private class Event {}
+
+    private class AddItemEvent extends Event {
+        private final String name;
+        private final long quantity;
+
+        public AddItemEvent(String name, long quantity) {
+            this.name = name;
+            this.quantity = quantity;
+        }
+    }
+
+    private class RemoveItem extends Event {
+        private final String name;
+
+        public RemoveItem(String name) {
+            this.name = name;
+        }
     }
 }
