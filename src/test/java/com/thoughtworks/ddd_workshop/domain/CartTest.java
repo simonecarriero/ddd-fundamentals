@@ -70,6 +70,27 @@ public class CartTest {
     }
 
     @Test
+    void cartIsCheckedOut() {
+        var cart = new Cart();
+
+        assertFalse(cart.isCheckedOut());
+        var order = cart.checkout();
+        assertTrue(cart.isCheckedOut());
+    }
+
+    @Test
+    void checkoutGenerateOrder() {
+        var cart = new Cart();
+
+        cart.addProduct(new Item(IPAD_PRO, 3));
+        cart.addProduct(new Item(REEBOK_CRICKET_BAT, 2));
+        var order = cart.checkout();
+
+        assertEquals(5, order.getNumberOfProducts());
+        assertEquals(List.of(IPAD_PRO, IPAD_PRO, IPAD_PRO, REEBOK_CRICKET_BAT, REEBOK_CRICKET_BAT), order.getProducts());
+    }
+
+    @Test
     void keepTrackOfTheProductsThatHaveBeenRemovedFromTheCart() {
         var cart = new Cart();
         Item item = new Item(IPAD_PRO, 1);

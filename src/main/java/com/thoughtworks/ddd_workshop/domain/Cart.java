@@ -9,6 +9,7 @@ public class Cart {
     private List<Item> items = new ArrayList<>();
     private final List<Item> removedItems = new ArrayList<>();
     private final List<Event> events = new ArrayList<>();
+    private boolean checkedOut = false;
 
     @Override
     public boolean equals(Object o) {
@@ -73,6 +74,23 @@ public class Cart {
             this.removedItems.add(new Item(new Product(productName, null), 0));
             this.items = filteredProducts;
         }
+    }
+
+    public boolean isCheckedOut() {
+        return this.checkedOut;
+    }
+
+    public Order checkout() {
+        this.checkedOut = true;
+        List<Product> products = new ArrayList<>();
+        for (var item: items) {
+            for (int i=0; i<item.getQuantity(); ++i) {
+                products.add(item.getProduct());
+            }
+        }
+        var order =  new Order(products);
+
+        return order;
     }
 
     private class Event {}
