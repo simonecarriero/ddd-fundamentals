@@ -30,21 +30,21 @@ public class Cart {
         this.items.add(item);
     }
 
-    public void addProduct(Item item, int quantity) {
-        for (int i = 0; i < quantity; i++) {
-            this.addProduct(item);
-        }
-    }
-
     public boolean contains(String productName) {
         return this.items.stream()
                 .anyMatch(item -> Objects.equals(item.getName(), productName));
     }
 
     public long countProduct(String productName) {
-        return this.items.stream()
+        Optional<Item> found = this.items.stream()
                 .filter(item -> Objects.equals(item.getName(), productName))
-                .count();
+                .findFirst();
+
+        if (found.isPresent()) {
+            return found.get().getQuantity();
+        }
+
+        return 0;
     }
 
     public void removeProducts(String productName) {
@@ -53,10 +53,9 @@ public class Cart {
                 .collect(Collectors.toList());
 
         if (filteredProducts.size() < this.items.size()) {
-            this.removedItems.add(new Item(productName));
+            this.removedItems.add(new Item(productName, 0));
             this.items = filteredProducts;
         }
-
     }
 
     public List<Item> getRemovedProducts() {
